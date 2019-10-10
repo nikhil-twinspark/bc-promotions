@@ -182,11 +182,20 @@ function manage_promotions_columns($column_name, $id) {
             break;
         case 'promotion_expiry_date1':
             $expiry_date =  get_post_meta( $post->ID , 'promotion_expiry_date1' , true );
+            $expiry_date2 =  get_post_meta( $post->ID , 'promotion_expiry_date2' , true );
             $curdate = date('m/d/Y');
-            if($curdate > $expiry_date){
-                echo '<span class="expired">'.$expiry_date.'</span>';
-            }else{
-                echo $expiry_date;
+            if(isset($expiry_date) && !empty($expiry_date)){
+                if($curdate > $expiry_date){
+                    echo '<span class="expired">'.$expiry_date.'</span>';
+                }else{
+                    echo $expiry_date;
+                }
+            }elseif(isset($expiry_date2) && !empty($expiry_date2)){
+                if($curdate > $expiry_date2){
+                    echo '<span class="expired">'.$expiry_date2.'</span>';
+                }else{
+                    echo $expiry_date2;
+                }
             }
             break;
         case 'updated':
@@ -199,11 +208,20 @@ function manage_promotions_columns($column_name, $id) {
         case 'status':
             $status = $post->post_status;
             $expiry_date =  get_post_meta( $post->ID , 'promotion_expiry_date1' , true );
+            $expiry_date2 =  get_post_meta( $post->ID , 'promotion_expiry_date2' , true );
             $curdate = date('m/d/Y');
-            if ($curdate > $expiry_date) {
-                echo '<span class="expired">Expired</span>';
-            }else{
-                echo ucfirst($status);
+            if(isset($expiry_date) && !empty($expiry_date)){
+                if ($curdate > $expiry_date) {
+                    echo '<span class="expired">Expired</span>';
+                }else{
+                    echo ucfirst($status);
+                }
+            }elseif(isset($expiry_date2) && !empty($expiry_date2)){
+                if ($curdate > $expiry_date2) {
+                    echo '<span class="expired">Expired</span>';
+                }else{
+                    echo ucfirst($status);
+                }
             }
             break;
         default:
