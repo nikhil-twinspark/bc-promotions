@@ -8,7 +8,7 @@ function bc_create_metabox() {
     // Must be repeated for each post type you want the metabox to appear on.
     add_meta_box(
         'bc_render_metabox', // Metabox ID
-        'Custom Metabox', // Title to display
+        ' ', // Title to display
         'bc_render_metabox', // Function to call that contains the metabox content
         'bc_promotions', // Post type to display metabox on
         'test', // Where to put it (normal = main colum, side = sidebar, etc.)

@@ -21,3 +21,4 @@ li.active a{background: #0085ba !important;
     text-decoration: none !important;
     text-shadow: 0 -1px 1px #006799 !important,1px 0 1px #006799 !important,0 1px 1px #006799 !important,-1px 0 1px #006799 !important;}
 .expired{color: #a00;}
+h1 b{font-weight: normal;}
