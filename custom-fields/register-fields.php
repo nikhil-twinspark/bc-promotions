@@ -111,7 +111,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                                     <h3 id="promotion_title" class="font-bold no-margins text-center ml-1"><?php echo esc_attr( $title ); ?></h3>
                                     <h5 id="promotion_subheading_msg" class="m-xs text-center"><?= $subheading ?></h5>
 
-                                    <div class="text-center ml-1 font-italic"><small id="expires1"> <?php echo "Expires ".esc_attr( $date ); ?></small></div>
+                                    <div class="text-center ml-1 font-italic"><small id="expires1"> <?php echo esc_attr( $date ); ?></small></div>
                                     <div class="text-center font-italic"><small id="promotion_footerheading_msg" class="text-center"><?= $footer_heading ?></small></div>
                                 </div>
                             </div>
