@@ -92,5 +92,14 @@ jQuery(document).ready(function(){
 
 	jQuery(".wp-heading-inline").append("<b class='defaultmsg'> - Coupon Builder</b>");
 
+	// Restrict html tags in inputbox
+    jQuery(function(){
+	    jQuery('#promotion_title_metabox1').on("keydown", function(e){
+	        if (e.shiftKey && (e.which == 188 || e.which == 190)) {
+	            e.preventDefault();
+	        }
+	    });
+	});
+
 });
 
