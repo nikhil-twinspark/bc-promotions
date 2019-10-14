@@ -79,6 +79,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                                     <span class="input-group-addon">
                                     <!-- <i class="fa fa-calendar"></i> -->
                                     </span>
+
                                     <input type="text" name="promotion_expiry_date_metabox1" id="promotion_expiry_date_metabox1" value="<?php echo esc_attr( $date ); ?>" class="form-control" required>
                                 </div>
                             </div>
@@ -111,7 +112,8 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                                     <h3 id="promotion_title" class="font-bold no-margins text-center ml-1"><?php echo esc_attr( $title ); ?></h3>
                                     <h5 id="promotion_subheading_msg" class="m-xs text-center"><?= $subheading ?></h5>
 
-                                    <div class="text-center ml-1 font-italic"><small id="expires1"> <?php echo esc_attr( $date ); ?></small></div>
+                                    
+                                    <div class="text-center ml-1 font-italic"><small id="expires1"><?php if (!empty($date)) { echo "Expires"; }?> <?php echo esc_attr( $date ); ?></small></div>
                                     <div class="text-center font-italic"><small id="promotion_footerheading_msg" class="text-center"><?= $footer_heading ?></small></div>
                                 </div>
                             </div>
