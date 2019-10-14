@@ -4,7 +4,7 @@ function bc_register_promotion_type() {
         'name' => __( 'Promotions', BCDOMAIN ),
         'singular_name' => __( 'Promotion', BCDOMAIN ),
         // 'archives' => __( 'Promotions Calendar', BCDOMAIN ),
-        'add_new' => __( 'Add New Promotion', BCDOMAIN ),
+        'add_new' => __( 'Add New', BCDOMAIN ),
         'add_new_item' => __( 'Add New Promotion', BCDOMAIN ),
     );
 
