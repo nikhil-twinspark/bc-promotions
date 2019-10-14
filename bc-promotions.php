@@ -69,19 +69,17 @@ function bc_include_css_js($hook){
 
 
 function bc_promotion_shortcode( $atts ) {
-    // print_r($atts[0]); die();
-    // print_r($atts['single']); die();
-    // echo $atts['single'];
     if(isset($atts['single']) && !empty($atts['single'])){
         $id = $atts['single'];
         $post = get_post( $id );
-
+        $promotion_type = get_post_meta($id, 'promotion_type', TRUE);
+        if($promotion_type == 'Builder'){
+        
         $promotion_title1 = get_post_meta($id, 'promotion_title1', TRUE);
         $promotion_color = get_post_meta($id, 'promotion_color', TRUE);
         $promotion_expiry_date = get_post_meta($id, 'promotion_expiry_date1', TRUE);
         $promotion_subheading = get_post_meta($id, 'promotion_subheading', TRUE);
         $promotion_footer_heading = get_post_meta($id, 'promotion_footer_heading', TRUE);?>
-
         <div class="col-lg-6">
             <div class="widget lazur-bg no-padding" style="background-color:<?php echo $promotion_color; ?>">
                 <div class="p-m">
@@ -93,31 +91,54 @@ function bc_promotion_shortcode( $atts ) {
                 </div>
             </div>
         </div>
-          
+        <?php 
+        }elseif($promotion_type == 'Image'){
+            $promotion_image = get_post_meta($id, 'promotion_custom_image', TRUE);
+            ?>
+            <div class="col-lg-6">
+            <img class="lazy-loaded" data-src="<?= $promotion_image ?>" src="<?= $promotion_image ?>" width="300" height="300">
+            </div>
+        <?php } ?>
+        
     <?php } elseif($atts[0] == 'all'){
         $args = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'ASC');
         $the_query = get_posts( $args );
         $coupon_data = [];
         foreach ($the_query as $key => $value) {
-            $promotion_title1 = get_post_meta($value->ID, 'promotion_title1', TRUE);
-            $promotion_color = get_post_meta($value->ID, 'promotion_color', TRUE);
-            $promotion_expiry_date = get_post_meta($value->ID, 'promotion_expiry_date1', TRUE);
-            $promotion_subheading = get_post_meta($value->ID, 'promotion_subheading', TRUE);
-            $promotion_footer_heading = get_post_meta($value->ID, 'promotion_footer_heading', TRUE);
-            
-            if(isset($promotion_title1) && !empty($promotion_title1) && !in_array($promotion_title1, [null,false,''])){
+            $promotion_type = get_post_meta($value->ID, 'promotion_type', TRUE);
+            if($promotion_type == 'Builder'){
+                $promotion_title1 = get_post_meta($value->ID, 'promotion_title1', TRUE);
+                $promotion_color = get_post_meta($value->ID, 'promotion_color', TRUE);
+                $promotion_expiry_date = get_post_meta($value->ID, 'promotion_expiry_date1', TRUE);
+                $promotion_subheading = get_post_meta($value->ID, 'promotion_subheading', TRUE);
+                $promotion_footer_heading = get_post_meta($value->ID, 'promotion_footer_heading', TRUE);
                 $coupon_data[] = [
                         'post_id' => $value->ID,
-                        'promotion_title' => $promotion_title1,
+                        'promotion_type' => $promotion_type,
                         'promotion_color' => $promotion_color,
-                        'promotion_expiry_date' => $promotion_expiry_date,
+                        'promotion_title' => $promotion_title1,
                         'promotion_subheading' => $promotion_subheading,
                         'promotion_footer_heading' => $promotion_footer_heading,
+                        'promotion_expiry_date' => $promotion_expiry_date,
+                        'show' => true,
+                    ];
+            }elseif($promotion_type == 'Image'){
+                $promotion_title1 = get_post_meta($value->ID, 'promotion_title2', TRUE);
+                $promotion_expiry_date = get_post_meta($value->ID, 'promotion_expiry_date2', TRUE);
+                $promotion_custom_image = get_post_meta($value->ID, 'promotion_custom_image', TRUE);
+
+                $coupon_data[] = [
+                        'post_id' => $value->ID,
+                        'promotion_type' => $promotion_type,
+                        'promotion_title' => $promotion_title1,
+                        'promotion_image' => $promotion_custom_image,
+                        'promotion_expiry_date' => $promotion_expiry_date,
                         'show' => true,
                     ];
             }
         }
-        foreach ($coupon_data as $key => $coupon_value) { ?>
+        foreach ($coupon_data as $key => $coupon_value) {
+            if($coupon_value['promotion_type'] == 'Builder'){ ?>
             <ul class="list-group">
               <li class="list-group-item">
                 <div class="col-lg-6">
@@ -125,15 +146,23 @@ function bc_promotion_shortcode( $atts ) {
                         <div class="p-m">
                             <h3 class="font-bold no-margins text-center ml-1"><?php echo $coupon_value['promotion_title']; ?></h3>
                             <h5 class="m-xs text-center"><?php echo $coupon_value['promotion_subheading']; ?></h5>
-
                             <div class="text-center ml-1 font-italic"><small><?php echo $coupon_value['promotion_expiry_date']; ?> </small></div>
                             <div class="text-center font-italic"><small class="text-center"><?php echo $coupon_value['promotion_footer_heading']; ?></small></div>
                         </div>
                     </div>
                 </div>
               </li>
+            </ul> 
+            <?php }elseif($coupon_value['promotion_type'] == 'Image' && !empty($coupon_value['promotion_image'])){?>
+             <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="col-lg-6">
+                    <img class="lazy-loaded" data-src="<?= $coupon_value['promotion_image'] ?>" src="<?= $coupon_value['promotion_image'] ?>" width="300" height="300">
+                    </div>
+                </li>
             </ul>
-        <?php }    
+            <?php }
+        }    
     }
 
 }
