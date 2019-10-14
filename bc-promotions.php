@@ -146,7 +146,7 @@ function bc_promotion_shortcode( $atts ) {
                         <div class="p-m">
                             <h3 class="font-bold no-margins text-center ml-1"><?php echo $coupon_value['promotion_title']; ?></h3>
                             <h5 class="m-xs text-center"><?php echo $coupon_value['promotion_subheading']; ?></h5>
-                            <div class="text-center ml-1 font-italic"><small><?php echo $coupon_value['promotion_expiry_date']; ?> </small></div>
+                            <div class="text-center ml-1 font-italic"><small><?php echo "Expires ".$coupon_value['promotion_expiry_date']; ?> </small></div>
                             <div class="text-center font-italic"><small class="text-center"><?php echo $coupon_value['promotion_footer_heading']; ?></small></div>
                         </div>
                     </div>
