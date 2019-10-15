@@ -202,9 +202,6 @@ function add_new_promotions_columns($concerts_columns) {
 add_action('manage_bc_promotions_posts_custom_column', 'manage_promotions_columns', 10, 2);
 function manage_promotions_columns($column_name, $id) {
     global $post;
-    // echo "<pre>";
-    // print_r($post);
-    // die('ss');
     switch ($column_name) {
         case 'title':
             echo $get_title = get_post_meta( $post->ID , 'custom_title' , true );
@@ -228,7 +225,6 @@ function manage_promotions_columns($column_name, $id) {
             }
             break;
         case 'updated':
-            // echo $post->post_modified;
             echo get_the_date('m/d/Y'); 
             break;
         case 'type':

@@ -201,7 +201,8 @@ wp_nonce_field( '_namespace_form_metabox_nonce', '_namespace_form_metabox_proces
  */
 function bc_save_metabox( $post_id, $post ) {
     if ( isset($_POST['tab_val1']) && $_POST['tab_val1'] == 'true' ) {
-        $sanitizedtitle = wp_filter_post_kses( $_POST['promotion_title_metabox1'] );
+        $sanitizedtitle = wp_filter_post_kses( strip_tags($_POST['promotion_title_metabox1']) );
+        // print_r($sanitizedtitle); die('ss');
         $sanitizedcolor = wp_filter_post_kses( $_POST['promotion_color_metabox'] );
         $sanitizedexpiry = wp_filter_post_kses( $_POST['promotion_expiry_date_metabox1'] );
         $sanitizedsubheading = wp_filter_post_kses( $_POST['promotion_subheading'] );
@@ -218,7 +219,7 @@ function bc_save_metabox( $post_id, $post ) {
         update_post_meta( $post->ID, 'promotion_expiry_date2', '' );
         update_post_meta( $post->ID, 'promotion_custom_image', '' );
     }else if ( isset($_POST['tab_val2']) &&  $_POST['tab_val2'] == 'true' ) {
-        $sanitizedtitle = wp_filter_post_kses( $_POST['promotion_title_metabox2'] );
+        $sanitizedtitle = wp_filter_post_kses( strip_tags($_POST['promotion_title_metabox2']) );
         $sanitizedexpiry = wp_filter_post_kses( $_POST['promotion_expiry_date_metabox2'] );
         $sanitizedimage = wp_filter_post_kses( $_POST['promotion_custom_image'] );
         // Save our submissions to the database

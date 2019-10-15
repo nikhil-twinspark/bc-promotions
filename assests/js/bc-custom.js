@@ -75,7 +75,8 @@ jQuery(document).ready(function(){
 	});
 
 	var promotion_title = document.getElementById('promotion_title_metabox1');
-	promotion_title.onkeyup = function(){
+	var remove_html_from_str = promotion_title.innerText || promotion_title.textContent;
+	remove_html_from_str.onkeyup = function(){
 	    document.getElementById('promotion_title').innerHTML = promotion_title.value;
 	}
 	var promotion_subheading = document.getElementById('promotion_subheading');
