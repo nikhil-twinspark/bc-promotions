@@ -86,7 +86,7 @@ function bc_promotion_shortcode( $atts ) {
                     <h3 class="font-bold no-margins text-center ml-1"><?php echo $promotion_title1 ?></h3>
                     <h5 class="m-xs text-center"><?php echo $promotion_subheading; ?></h5>
 
-                    <div class="text-center ml-1 font-italic"><small><?php echo echo "Expires ".$promotion_expiry_date; ?> </small></div>
+                    <div class="text-center ml-1 font-italic"><small><?php echo "Expires ".$promotion_expiry_date; ?> </small></div>
                     <div class="text-center font-italic"><small class="text-center"><?php echo $promotion_footer_heading; ?></small></div>
                 </div>
             </div>
