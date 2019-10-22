@@ -67,7 +67,7 @@ function bc_include_css_js($hook){
     } 
 }
 
-
+add_shortcode( 'bc-promotion', 'bc_promotion_shortcode' );
 function bc_promotion_shortcode( $atts ) {
     if(isset($atts['single']) && !empty($atts['single'])){
         $id = $atts['single'];
@@ -101,7 +101,7 @@ function bc_promotion_shortcode( $atts ) {
         <?php } ?>
         
     <?php } elseif($atts[0] == 'all'){
-        $args = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'ASC');
+        $args = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'ASC','post_status'      => 'publish');
         $the_query = get_posts( $args );
         $coupon_data = [];
         foreach ($the_query as $key => $value) {
@@ -164,26 +164,19 @@ function bc_promotion_shortcode( $atts ) {
             <?php }
         }    
     }
-
 }
-// [bc-promotion single=69]
-// [bc-promotion all]
-add_shortcode( 'bc-promotion', 'bc_promotion_shortcode' );
 
 // Admin notice for displaying shortcode on index page
+add_action('admin_notices', 'bc_promotion_general_admin_notice');
 function bc_promotion_general_admin_notice(){
     global $pagenow;
     global $post;
-    // echo "<pre>";
-    // print_r($post);
-    // die('ss');
     if ( $pagenow == 'edit.php' && $post->post_type == "bc_promotions" ) {
          echo '<div class="notice notice-success is-dismissible">
             <p>Shortcode [bc-promotion all]</p>
          </div>';
     }
 }
-add_action('admin_notices', 'bc_promotion_general_admin_notice');
 
 
 /** ADMIN COLUMN - HEADERS*/
