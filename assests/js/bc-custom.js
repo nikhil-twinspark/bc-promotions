@@ -1,6 +1,18 @@
 jQuery(document).ready(function(){
 	// Date Picker
 	var date = new Date();
+    jQuery("#expiration_date .input-group.date").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        todayBtn: "linked",
+        dateFormat: 'dd/mm/yy',
+        minDate: 0,
+        startDate: date,
+        defaultDate: null
+    }).on('change', function() {
+        jQuery(this).valid();  // triggers the validation test
+    });
+	/*var date = new Date();
 	date.setDate(date.getDate());
 	jQuery('#expiration_date .input-group.date').datepicker({
 	    todayBtn: "linked",
@@ -9,7 +21,7 @@ jQuery(document).ready(function(){
 	    calendarWeeks: false,
 	    autoclose: true,
 	    startDate: date
-	});
+	});*/
 	// Color Picker
 	jQuery('.background-color').colorpicker();
     jQuery('.background-color').colorpicker().on('changeColor', function() {
