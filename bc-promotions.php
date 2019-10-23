@@ -72,6 +72,9 @@ function bc_promotion_shortcode( $atts ) {
     if(isset($atts['single']) && !empty($atts['single'])){
         $id = $atts['single'];
         $post = get_post( $id );
+        if($post->post_status != 'publish'){
+            return;
+        }
         $promotion_type = get_post_meta($id, 'promotion_type', TRUE);
         if($promotion_type == 'Builder'){
         
