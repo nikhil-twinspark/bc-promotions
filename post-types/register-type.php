@@ -12,7 +12,7 @@ function bc_register_promotion_type() {
         'labels' => $labels,
         'public' => true,
         'has_archive' => 'promotions',
-        'rewrite' => array( 'has_front' => true ),
+        'rewrite' => array( 'has_front' => true ,'slug' => 'promotions'),
         'menu_icon' => 'dashicons-tag',
         'supports' => false,
         'show_in_rest' => true,

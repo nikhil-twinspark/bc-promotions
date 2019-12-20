@@ -91,13 +91,15 @@ function bc_promotion_shortcode( $atts , $content = null ) {
             $footer_heading = get_post_meta( get_the_ID(), 'promotion_footer_heading', true ); ?>
     
             <div class="col-md-4 col-lg-4 p-2 text-center">
-                <div class="bc_color_secondary bc_color_primary_bg p-3 mb-3" style="background-color: <?php echo $color;?>">
-                    <div class="py-4 px-3 pt-0 border-white bc_coupon_container">
-                        <span class="pb-3  bc_font_alt_1 bc_text_36 d-block"><?php echo $title; ?></span>
-                        <span class="bc_text_30 d-block my-2"><?php echo $subheading;?></span>
-                        <span class="mt-3 bc_text_16">expires <?php echo $date;?></span>
+                <a href="<?php the_permalink(get_the_ID()); ?>" target="_blank">
+                    <div class="bc_color_secondary bc_color_primary_bg p-3 mb-3" style="background-color: <?php echo $color;?>">
+                        <div class="py-4 px-3 pt-0 border-white bc_coupon_container">
+                            <span class="pb-3  bc_font_alt_1 bc_text_36 d-block"><?php echo $title; ?></span>
+                            <span class="bc_text_30 d-block my-2"><?php echo $subheading;?></span>
+                            <span class="mt-3 bc_text_16">expires <?php echo $date;?></span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
     <?php }
     }else if($promotion_type == 'Image'){
@@ -106,7 +108,9 @@ function bc_promotion_shortcode( $atts , $content = null ) {
             $title2 = get_post_meta( get_the_ID(), 'promotion_title2', true );
             $promotion_custom_image = get_post_meta( get_the_ID(), 'promotion_custom_image', true ); ?>
             <div class="col-md-4 col-lg-4 p-2 text-center">
-                <img src="<?php echo $promotion_custom_image;?>" style="width:350px;height:228px;">
+                <a href="<?php the_permalink(get_the_ID()); ?>" target="_blank">
+                    <img src="<?php echo $promotion_custom_image;?>" style="width:350px;height:228px;">
+                </a>
             </div>
     <?php }
         }
