@@ -112,8 +112,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <h5>[bc-promotion single=<?= $post->ID?>]</h5>
-                                <!-- <h5>[bc-promotion all]</h5> -->
+                                <h5>[bc-promotion coupon_id="<?= $post->ID?>"]</h5>
                             </div>
                         </div>
                       </div>
@@ -166,7 +165,8 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                             </div>
                             <div class="form-group">
                                 <label>Shortcode</label>
-                                <h5>[bc-promotion single=<?= $post->ID?>]</h5>
+                                <h5>[bc-promotion coupon_id="<?= $post->ID?>"]</h5>
+
                             </div>
                         </div>
 
