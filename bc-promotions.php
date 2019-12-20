@@ -70,7 +70,7 @@ function bc_include_css_js($hook){
 add_shortcode( 'bc-promotion', 'bc_promotion_shortcode' );
 function bc_promotion_shortcode( $atts , $content = null ) {
     $Ids = null;
-    $args  = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'ASC','post_status'  => 'publish');
+    $args  = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'DESC','post_status'  => 'publish');
 
     if(isset($atts['coupon_id'])) {
         $Ids = explode(',', $atts['coupon_id']);
