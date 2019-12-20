@@ -8,7 +8,7 @@ function bc_create_metabox() {
     // Must be repeated for each post type you want the metabox to appear on.
     add_meta_box(
         'bc_render_metabox', // Metabox ID
-        ' ', // Title to display
+        'Coupon', // Title to display
         'bc_render_metabox', // Function to call that contains the metabox content
         'bc_promotions', // Post type to display metabox on
         'test', // Where to put it (normal = main colum, side = sidebar, etc.)
@@ -16,14 +16,6 @@ function bc_create_metabox() {
     );
 }
 add_action( 'add_meta_boxes', 'bc_create_metabox' );
-
-// Output the form `below_title` meta boxes:
-/*function bc_run_after_title_meta_boxes() {
-    global $post, $wp_meta_boxes;
-    do_meta_boxes( get_current_screen(), 'test', $post );
-    unset($wp_meta_boxes['bc_promotions']['test']);
-}
-add_action( 'edit_form_after_title', 'bc_run_after_title_meta_boxes' );*/
 
 /**
  * Render the metabox markup
@@ -107,7 +99,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="widget lazur-bg no-padding" style="background-color:<?php echo $color;?>">
+                            <div class="widget lazur-bg no-padding rounded-0" style="background-color:<?php echo $color;?>">
                                 <div class="p-m">
                                     <h3 id="promotion_title" class="font-bold no-margins text-center ml-1"><?php echo esc_attr( $title ); ?></h3>
                                     <h5 id="promotion_subheading_msg" class="m-xs text-center"><?= $subheading ?></h5>
@@ -143,7 +135,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><?php _e( 'Upload a custom image', 'promotion_color_metabox' );?></label>
+                                <label><?php _e( 'Upload a custom image (Size 350*225)', 'promotion_color_metabox' );?></label>
 
                                 <input type="text" name="promotion_custom_image" id="" class="meta-image form-control" value="<?php echo $promotion_custom_image;?>">
                                 <input type="button" class="button bc-promotion-image-upload" value="Browse">

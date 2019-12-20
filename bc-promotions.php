@@ -68,114 +68,64 @@ function bc_include_css_js($hook){
 }
 
 add_shortcode( 'bc-promotion', 'bc_promotion_shortcode' );
-function bc_promotion_shortcode( $atts ) {
-    if(isset($atts['single']) && !empty($atts['single'])){
-        $id = $atts['single'];
-        $post = get_post( $id );
-        if($post->post_status != 'publish'){
-            return;
-        }
-        $promotion_type = get_post_meta($id, 'promotion_type', TRUE);
-        if($promotion_type == 'Builder'){
-        
-        $promotion_title1 = get_post_meta($id, 'promotion_title1', TRUE);
-        $promotion_color = get_post_meta($id, 'promotion_color', TRUE);
-        $promotion_expiry_date = get_post_meta($id, 'promotion_expiry_date1', TRUE);
-        $promotion_subheading = get_post_meta($id, 'promotion_subheading', TRUE);
-        $promotion_footer_heading = get_post_meta($id, 'promotion_footer_heading', TRUE);?>
-        <div class="col-lg-6">
-            <div class="widget lazur-bg no-padding" style="background-color:<?php echo $promotion_color; ?>">
-                <div class="p-m">
-                    <h3 class="font-bold no-margins text-center ml-1"><?php echo $promotion_title1 ?></h3>
-                    <h5 class="m-xs text-center"><?php echo $promotion_subheading; ?></h5>
+function bc_promotion_shortcode( $atts , $content = null ) {
+    $Ids = null;
+    $args  = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'ASC','post_status'  => 'publish');
 
-                    <div class="text-center ml-1 font-italic"><small><?php echo "Expires ".$promotion_expiry_date; ?> </small></div>
-                    <div class="text-center font-italic"><small class="text-center"><?php echo $promotion_footer_heading; ?></small></div>
-                </div>
-            </div>
-        </div>
-        <?php 
-        }elseif($promotion_type == 'Image'){
-            $promotion_image = get_post_meta($id, 'promotion_custom_image', TRUE);
-            ?>
-            <div class="col-lg-6">
-            <img class="lazy-loaded" data-src="<?= $promotion_image ?>" src="<?= $promotion_image ?>" width="300" height="300">
-            </div>
-        <?php } ?>
-        
-    <?php } elseif($atts[0] == 'all'){
-        $args = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'ASC','post_status'      => 'publish');
-        $the_query = get_posts( $args );
-        $coupon_data = [];
-        foreach ($the_query as $key => $value) {
-            $promotion_type = get_post_meta($value->ID, 'promotion_type', TRUE);
-            if($promotion_type == 'Builder'){
-                $promotion_title1 = get_post_meta($value->ID, 'promotion_title1', TRUE);
-                $promotion_color = get_post_meta($value->ID, 'promotion_color', TRUE);
-                $promotion_expiry_date = get_post_meta($value->ID, 'promotion_expiry_date1', TRUE);
-                $promotion_subheading = get_post_meta($value->ID, 'promotion_subheading', TRUE);
-                $promotion_footer_heading = get_post_meta($value->ID, 'promotion_footer_heading', TRUE);
-                $coupon_data[] = [
-                        'post_id' => $value->ID,
-                        'promotion_type' => $promotion_type,
-                        'promotion_color' => $promotion_color,
-                        'promotion_title' => $promotion_title1,
-                        'promotion_subheading' => $promotion_subheading,
-                        'promotion_footer_heading' => $promotion_footer_heading,
-                        'promotion_expiry_date' => $promotion_expiry_date,
-                        'show' => true,
-                    ];
-            }elseif($promotion_type == 'Image'){
-                $promotion_title1 = get_post_meta($value->ID, 'promotion_title2', TRUE);
-                $promotion_expiry_date = get_post_meta($value->ID, 'promotion_expiry_date2', TRUE);
-                $promotion_custom_image = get_post_meta($value->ID, 'promotion_custom_image', TRUE);
-
-                $coupon_data[] = [
-                        'post_id' => $value->ID,
-                        'promotion_type' => $promotion_type,
-                        'promotion_title' => $promotion_title1,
-                        'promotion_image' => $promotion_custom_image,
-                        'promotion_expiry_date' => $promotion_expiry_date,
-                        'show' => true,
-                    ];
-            }
-        }
-        foreach ($coupon_data as $key => $coupon_value) {
-            if($coupon_value['promotion_type'] == 'Builder'){ ?>
-            <ul class="list-group">
-              <li class="list-group-item">
-                <div class="col-lg-6">
-                    <div class="widget lazur-bg no-padding" style="background-color:<?php echo $coupon_value['promotion_color']; ?>">
-                        <div class="p-m">
-                            <h3 class="font-bold no-margins text-center ml-1"><?php echo $coupon_value['promotion_title']; ?></h3>
-                            <h5 class="m-xs text-center"><?php echo $coupon_value['promotion_subheading']; ?></h5>
-                            <div class="text-center ml-1 font-italic"><small><?php echo "Expires ".$coupon_value['promotion_expiry_date']; ?> </small></div>
-                            <div class="text-center font-italic"><small class="text-center"><?php echo $coupon_value['promotion_footer_heading']; ?></small></div>
-                        </div>
-                    </div>
-                </div>
-              </li>
-            </ul> 
-            <?php }elseif($coupon_value['promotion_type'] == 'Image' && !empty($coupon_value['promotion_image'])){?>
-             <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="col-lg-6">
-                    <img class="lazy-loaded" data-src="<?= $coupon_value['promotion_image'] ?>" src="<?= $coupon_value['promotion_image'] ?>" width="300" height="300">
-                    </div>
-                </li>
-            </ul>
-            <?php }
-        }    
+    if(isset($atts['coupon_id'])) {
+        $Ids = explode(',', $atts['coupon_id']);
+        $postIds = $Ids;
+        $args['post__in'] = $postIds;
     }
-}
+    $query = new WP_Query( $args );
+        if ( $query->have_posts() ) :
+        while($query->have_posts()) : $query->the_post();
+
+        $promotion_type = get_post_meta(get_the_ID(), 'promotion_type', TRUE);
+        if($promotion_type == 'Builder'){
+        $date = get_post_meta( get_the_ID(), 'promotion_expiry_date1', true );
+        if($date >= current_time('m/d/Y')){
+            $title = get_post_meta( get_the_ID(), 'promotion_title1', true );
+            $color = get_post_meta( get_the_ID(), 'promotion_color', true );
+            $subheading = get_post_meta( get_the_ID(), 'promotion_subheading', true );
+            $footer_heading = get_post_meta( get_the_ID(), 'promotion_footer_heading', true ); ?>
+    
+            <div class="col-md-4 col-lg-4 p-2 text-center">
+                <div class="bc_color_secondary bc_color_primary_bg p-3 mb-3">
+                    <div class="py-4 px-3 pt-0 border-white bc_coupon_container">
+                        <span class="pb-3  bc_font_alt_1 bc_text_36 d-block"><?php echo $title; ?></span>
+                        <span class="bc_text_30 d-block my-2"><?php echo $subheading;?></span>
+                        <span class="mt-3 bc_text_16">expires <?php echo $date;?></span>
+                    </div>
+                </div>
+            </div>
+    <?php }
+    }else if($promotion_type == 'Image'){
+        $date2 = get_post_meta( get_the_ID(), 'promotion_expiry_date2', true );
+        if($date2 >= current_time('m/d/Y')){
+            $title2 = get_post_meta( get_the_ID(), 'promotion_title2', true );
+            $promotion_custom_image = get_post_meta( get_the_ID(), 'promotion_custom_image', true ); ?>
+            <div class="col-md-4 col-lg-4 p-2 text-center">
+                <img src="<?php echo $promotion_custom_image;?>" style="width:350px;height:228px;">
+            </div>
+    <?php }
+        }
+    ?>
+    <?php
+    endwhile; 
+    wp_reset_query();
+    endif;
+    ?>
+
+<?php }
 
 // Admin notice for displaying shortcode on index page
 add_action('admin_notices', 'bc_promotion_general_admin_notice');
 function bc_promotion_general_admin_notice(){
     global $pagenow;
     global $post;
-    if ( $pagenow == 'edit.php' && $post->post_type == "bc_promotions" ) {
-         echo '<div class="notice notice-success is-dismissible">
+    if ($pagenow == 'edit.php' &&  (isset($post->post_type) ? $post->post_type : null) == 'bc_promotions') { 
+     echo '<div class="notice notice-success is-dismissible">
             <p>Shortcode [bc-promotion all]</p>
          </div>';
     }
