@@ -130,7 +130,7 @@ function bc_promotion_general_admin_notice(){
     global $post;
     if ($pagenow == 'edit.php' &&  (isset($post->post_type) ? $post->post_type : null) == 'bc_promotions') { 
      echo '<div class="notice notice-success is-dismissible">
-            <p>Shortcode [bc-promotion]</p>
+            <p><b>Shortcode Example</b> All : [bc-promotion] Specific : [bc-promotion coupon_id="1,2,3"]</p>
          </div>';
     }
 }
