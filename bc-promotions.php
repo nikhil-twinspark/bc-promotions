@@ -48,15 +48,12 @@ function bc_include_css_js($hook){
         wp_enqueue_style('bc-plugin-css');
         wp_enqueue_style('bc-colorpicker-css',plugins_url('assests/css/bootstrap-colorpicker.min.css', __FILE__), array(), '1.0.0', 'all');
         wp_enqueue_style('bc-datepicker',plugins_url('assests/css/datepicker3.css', __FILE__), array(), '1.0.0', 'all');
-        // wp_enqueue_style('bc-fontawesome',plugins_url('assests/css/font-awesome.min.css', __FILE__), array(), '1.0.0', 'all');
         wp_enqueue_style('bc-style',plugins_url('assests/css/bc-style.css', __FILE__), array(), '1.0.0', 'all');
-
-
         
 
         // Inculde JS Libs
         wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js', true);
-        wp_enqueue_script('bootstap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js', true);
+        // wp_enqueue_script('bootstap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js', true);
 
         wp_enqueue_script('bc-datepicker-js', plugin_dir_url(__FILE__).'assests/js/bootstrap-datepicker.js', true);
 

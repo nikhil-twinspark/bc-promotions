@@ -1,7 +1,7 @@
 jQuery(document).ready(function(){
 	// Date Picker
 	var date = new Date();
-    jQuery("#expiration_date .input-group.date").datepicker({
+    jQuery(".expiration_date .input-group.date > input").datepicker({
         changeMonth: true,
         changeYear: true,
         todayBtn: "linked",

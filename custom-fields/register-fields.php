@@ -65,7 +65,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="form-group" id="expiration_date">
+                            <div class="form-group expiration_date">
                                 <label><?php _e( 'Expiration Date', 'custompromotion_expiry_date_metabox_date' );?></label>
                                 <div class="input-group date">
                                     <span class="input-group-addon">
@@ -136,7 +136,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                             <div class="form-group">
                                 <label><?php _e( 'Upload a custom image (Size 350*225)', 'promotion_color_metabox' );?></label>
 
-                                <input type="text" name="promotion_custom_image" id="" class="meta-image form-control" value="<?php echo $promotion_custom_image;?>">
+                                <input type="text" name="promotion_custom_image" class="meta-image form-control" value="<?php echo $promotion_custom_image;?>">
                                 <input type="button" class="button bc-promotion-image-upload" value="Browse">
                                 <input type="button" class="button bc-promotion-image-remove" value="Remove Image">
                                 <p>
@@ -154,7 +154,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group" id="expiration_date">
+                            <div class="form-group expiration_date">
                                 <label><?php _e( 'Expiration Date', 'custompromotion_expiry_date_metabox_date' );?></label>
                                 <div class="input-group date">
                                     <span class="input-group-addon">
