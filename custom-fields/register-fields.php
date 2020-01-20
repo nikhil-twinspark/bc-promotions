@@ -196,7 +196,10 @@ function bc_save_metabox( $post_id, $post ) {
         $sanitizedtitle = wp_filter_post_kses( strip_tags($_POST['promotion_title_metabox1']) );
         // print_r($sanitizedtitle); die('ss');
         $sanitizedcolor = wp_filter_post_kses( $_POST['promotion_color_metabox'] );
-        $sanitizedexpiry = wp_filter_post_kses( $_POST['promotion_expiry_date_metabox1'] );
+        $get_expiry_date = wp_filter_post_kses( $_POST['promotion_expiry_date_metabox1'] );
+        $date_format = str_replace('/', '-', $get_expiry_date);
+        $sanitizedexpiry =  date('m/d/Y', strtotime($date_format));
+
         $sanitizedsubheading = wp_filter_post_kses( $_POST['promotion_subheading'] );
         $sanitizedfooterheading = wp_filter_post_kses( $_POST['promotion_footer_heading'] );
         // Save our submissions to the database
@@ -212,7 +215,10 @@ function bc_save_metabox( $post_id, $post ) {
         update_post_meta( $post->ID, 'promotion_custom_image', '' );
     }else if ( isset($_POST['tab_val2']) &&  $_POST['tab_val2'] == 'true' ) {
         $sanitizedtitle = wp_filter_post_kses( strip_tags($_POST['promotion_title_metabox2']) );
-        $sanitizedexpiry = wp_filter_post_kses( $_POST['promotion_expiry_date_metabox2'] );
+        $get_expiry_date = wp_filter_post_kses( $_POST['promotion_expiry_date_metabox2'] );
+        $date_format = str_replace('/', '-', $get_expiry_date);
+        $sanitizedexpiry =  date('m/d/Y', strtotime($date_format));
+
         $sanitizedimage = wp_filter_post_kses( $_POST['promotion_custom_image'] );
         // Save our submissions to the database
         update_post_meta( $post->ID, 'promotion_title2', $sanitizedtitle );
