@@ -109,7 +109,7 @@ function bc_promotion_shortcode( $atts , $content = null ) {
             $promotion_custom_image = get_post_meta( get_the_ID(), 'promotion_custom_image', true ); ?>
             <div class="col-md-4 col-lg-4 p-2 text-center">
                 <a href="<?php the_permalink(get_the_ID()); ?>" target="_blank">
-                    <img src="<?php echo $promotion_custom_image;?>" style="width:350px;height:228px;">
+                    <img src="<?php echo $promotion_custom_image;?>" class="img-fluid">
                 </a>
             </div>
     <?php }
