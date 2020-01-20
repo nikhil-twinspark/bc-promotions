@@ -134,7 +134,7 @@ $promotion_custom_image = get_post_meta( $post->ID, 'promotion_custom_image', tr
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><?php _e( 'Upload a custom image (Size 350*225)', 'promotion_color_metabox' );?></label>
+                                <label><?php _e( 'Upload a custom image (Size 300*300)', 'promotion_color_metabox' );?></label>
 
                                 <input type="text" name="promotion_custom_image" class="meta-image form-control" value="<?php echo $promotion_custom_image;?>">
                                 <input type="button" class="button bc-promotion-image-upload" value="Browse">
