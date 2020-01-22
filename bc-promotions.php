@@ -69,6 +69,31 @@ function bc_include_css_js($hook){
 
 add_shortcode( 'bc-promotion', 'bc_promotion_shortcode' );
 function bc_promotion_shortcode( $atts , $content = null ) {
+
+    static $count = 0;
+    $count++;
+    add_action( 'wp_footer' , function() use($count){
+    ?>
+    <script>
+        var couponSwiper = new Swiper('#bc_coupons_swiper_<?php echo $count ?>', {
+        pagination: false,
+        slidesPerView: 3,
+        spaceBetween: 32,
+        breakpoints: {
+            320: {slidesPerView: 1},
+            480: {slidesPerView: 1},
+            640: {slidesPerView: 2},
+            768: {slidesPerView: 3},
+            1000: {slidesPerView: 3}
+        },
+        navigation: {
+            nextEl: '.bc_coupon_swiper_next',
+            prevEl: '.bc_coupon_swiper_prev',
+        },
+    });
+    </script>
+    <?php });
+
     $Ids = null;
     $args  = array( 'post_type' => 'bc_promotions', 'posts_per_page' => -1, 'order'=> 'DESC','post_status'  => 'publish');
 
@@ -77,8 +102,17 @@ function bc_promotion_shortcode( $atts , $content = null ) {
         $postIds = $Ids;
         $args['post__in'] = $postIds;
     }
+    ob_start();
     $query = new WP_Query( $args );
-        if ( $query->have_posts() ) :
+        if ( $query->have_posts() ) : ?>
+        <div class="container-fluid bc_about_bg">
+        <div class="container pb-5">
+        <h2 class="bc_font_alt_1 text-capitalize text-center py-5">Our Promotions</h2>
+        <div class="mt-5">
+            <!-- before pase -->
+            <div id="bc_coupons_swiper_<?php echo $count ?>" class="bc_promotions swiper-container text-center my-4 swiper-container-initialized swiper-container-horizontal">
+                <div class="swiper-wrapper text-center">
+        <?php
         while($query->have_posts()) : $query->the_post();
 
         $promotion_type = get_post_meta(get_the_ID(), 'promotion_type', TRUE);
@@ -89,14 +123,13 @@ function bc_promotion_shortcode( $atts , $content = null ) {
             $color = get_post_meta( get_the_ID(), 'promotion_color', true );
             $subheading = get_post_meta( get_the_ID(), 'promotion_subheading', true );
             $footer_heading = get_post_meta( get_the_ID(), 'promotion_footer_heading', true ); ?>
-    
-            <div class="col-md-4 col-lg-4 p-2 text-center">
+            <div class="swiper-slide">
                 <a href="<?php the_permalink(get_the_ID()); ?>" target="_blank">
                     <div class="bc_color_secondary bc_color_primary_bg p-3 mb-3" style="background-color: <?php echo $color;?>">
                         <div class="py-4 px-3 pt-0 border-white bc_coupon_container">
-                            <span class="pb-3  bc_font_alt_1 bc_text_36 d-block"><?php echo $title; ?></span>
-                            <span class="bc_text_30 d-block my-2"><?php echo $subheading;?></span>
-                            <span class="mt-3 bc_text_16">expires <?php echo $date;?></span>
+                            <span class="pb-3 bc_font_alt_1 bc_text_36 d-block bc_color_secondary text-capitalize "><?php echo $title; ?></span>
+                           <span class="bc_text_36 d-block my-2"><?php echo $subheading;?></span>
+                            <span class="mt-3 bc_text_20 ">expires <?php echo $date;?></span>
                         </div>
                     </div>
                 </a>
@@ -107,9 +140,9 @@ function bc_promotion_shortcode( $atts , $content = null ) {
         if(strtotime($date2) >= strtotime(current_time('m/d/Y'))){
             $title2 = get_post_meta( get_the_ID(), 'promotion_title2', true );
             $promotion_custom_image = get_post_meta( get_the_ID(), 'promotion_custom_image', true ); ?>
-            <div class="col-md-4 col-lg-4 p-2 text-center">
+            <div class="swiper-slide">
                 <a href="<?php the_permalink(get_the_ID()); ?>" target="_blank">
-                    <img src="<?php echo $promotion_custom_image;?>" class="img-fluid">
+                    <img class="img-fluid" src="<?php echo $promotion_custom_image;?>">
                 </a>
             </div>
     <?php }
@@ -120,8 +153,20 @@ function bc_promotion_shortcode( $atts , $content = null ) {
     wp_reset_query();
     endif;
     ?>
+            </div>
+                <ul class=" list-unstyled">
+                    <li class="list-inline-item bc_coupon_swiper_prev bc_swiper-button-prev"> <em class="fa fa-chevron-circle-left"></em> </li>
+                    <li class="list-inline-item bc_coupon_swiper_next bc_swiper-button-next"> <em class="fa fa-chevron-circle-right"></em> </li>
+                </ul>
+            </div>
+        </div>
+    </div>    
+</div>
 
-<?php }
+<?php 
+$output = ob_get_clean();
+return $output;
+}
 
 // Admin notice for displaying shortcode on index page
 add_action('admin_notices', 'bc_promotion_general_admin_notice');
