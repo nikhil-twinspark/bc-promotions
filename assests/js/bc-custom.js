@@ -5,7 +5,7 @@ jQuery(document).ready(function(){
         changeMonth: true,
         changeYear: true,
         todayBtn: "linked",
-        dateFormat: 'dd/mm/yy',
+        dateFormat: 'mm/dd/yy',
         minDate: 0,
         startDate: date,
         defaultDate: null
